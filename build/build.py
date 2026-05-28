@@ -20,7 +20,7 @@ import pages_service
 import pages_therapist
 import pages_magazine
 import pages_location
-import pages_seoul_dong
+import pages_dong
 
 
 def minify_html(html):
@@ -159,11 +159,12 @@ def main():
         pri = "0.9" if depth == 1 else ("0.85" if depth == 2 else "0.75")
         urls.append((u, pri, "weekly"))
 
-    # 서울 행정동 (244개)
-    for path, html in pages_seoul_dong.all_seoul_dong_pages():
-        write(path, html)
-        u = "/" + path.lstrip("/").replace("index.html","")
-        urls.append((u, "0.7", "weekly"))
+    # 서울·경기·인천·부산 행정동 (모든 도시 합산 ~850개)
+    for city_slug in ("seoul", "gyeonggi", "incheon", "busan"):
+        for path, html in pages_dong.all_dong_pages(city_slug):
+            write(path, html)
+            u = "/" + path.lstrip("/").replace("index.html","")
+            urls.append((u, "0.7", "weekly"))
 
     # robots / manifest / sitemap / favicon
     write_robots()

@@ -5,6 +5,9 @@ from data.site import SITE
 from data.catalog import SERVICES, GLOBAL_REVIEWS
 from data.districts import CITIES, all_districts
 from data.seoul_dongs import DONGS_BY_DISTRICT
+from data.gyeonggi_dongs import DONGS as GG_DONGS
+from data.incheon_dongs import DONGS as IC_DONGS
+from data.busan_dongs import DONGS as BS_DONGS
 from template import (
     page, note_card, faq_block, faq_ld, breadcrumb_html, cta_band,
     section_head, organization_ld, breadcrumb_ld
@@ -131,15 +134,22 @@ def _city_courses(slug):
         ]
 
 
+_DONGS_BY_CITY = {
+    "seoul": DONGS_BY_DISTRICT,
+    "gyeonggi": GG_DONGS,
+    "incheon": IC_DONGS,
+    "busan": BS_DONGS,
+}
+
+
 def _seoul_dong_block(d, city_slug):
-    """서울 자치구 페이지에 행정동 리스트 블록 삽입."""
-    if city_slug != "seoul":
-        return ""
+    """자치구 페이지에 하위 행정동 리스트 블록 삽입 — 4개 도시 모두 지원."""
+    dongs_map = _DONGS_BY_CITY.get(city_slug, {})
     slug = d["slug"]
-    dongs = DONGS_BY_DISTRICT.get(slug, [])
+    dongs = dongs_map.get(slug, [])
     if not dongs:
         return ""
-    cards = "".join(f"""<a class="reg reveal" href="/locations/seoul/{slug}/dong/{ds}/">
+    cards = "".join(f"""<a class="reg reveal" href="/locations/{city_slug}/{slug}/dong/{ds}/">
 <span class="city">{d['name_ko']}</span>
 <h3>{name}</h3>
 <div class="count">{zone} · {near.split(',')[0]} 권역</div>
