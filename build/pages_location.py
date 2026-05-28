@@ -4,6 +4,7 @@ import random
 from data.site import SITE
 from data.catalog import SERVICES, GLOBAL_REVIEWS
 from data.districts import CITIES, all_districts
+from data.seoul_dongs import DONGS_BY_DISTRICT
 from template import (
     page, note_card, faq_block, faq_ld, breadcrumb_html, cta_band,
     section_head, organization_ld, breadcrumb_ld
@@ -128,6 +129,25 @@ def _city_courses(slug):
             "서면·연제(부산진구·연제구): 60분 컴팩트 또는 75분 어깨.",
             "외곽(기장·강서): 90분 풀바디 권장.",
         ]
+
+
+def _seoul_dong_block(d, city_slug):
+    """서울 자치구 페이지에 행정동 리스트 블록 삽입."""
+    if city_slug != "seoul":
+        return ""
+    slug = d["slug"]
+    dongs = DONGS_BY_DISTRICT.get(slug, [])
+    if not dongs:
+        return ""
+    cards = "".join(f"""<a class="reg reveal" href="/locations/seoul/{slug}/dong/{ds}/">
+<span class="city">{d['name_ko']}</span>
+<h3>{name}</h3>
+<div class="count">{zone} · {near.split(',')[0]} 권역</div>
+<div class="meta">{char_line}</div>
+</a>""" for name, ds, zone, near, char_line in dongs)
+    return f"""<h2 style="margin-top:64px" id="dongs">{d['name_ko']} 행정동 {len(dongs)}개</h2>
+<p style="color:#bcbcc4;margin-bottom:18px">{d['name_ko']} 안의 모든 행정동(行政洞)을 24시간 동일 디스패치로 운영합니다. 1·2·3동 등 번호 행정동은 통합 한 페이지로 안내드립니다.</p>
+<div class="reg-grid">{cards}</div>"""
 
 
 def district_page(d):
@@ -289,6 +309,8 @@ def district_page(d):
 
 <h2 style="margin-top:64px" id="pricing">{d['name_ko']} 추천 코스 요금</h2>
 <div class="price-grid">{price_cards}</div>
+
+{_seoul_dong_block(d, city_slug)}
 
 <h2 style="margin-top:64px">{d['name_ko']} 실 후기</h2>
 <div class="rv-grid">{reviews_html}</div>
