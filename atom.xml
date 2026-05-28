@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ko">
 <title>마사지꾼 출장마사지 매거진</title>
 <subtitle>수도권·부산 전역 24시 출장마사지</subtitle>
-<link href="https://maggun.co.kr/atom.xml" rel="self"/>
-<link href="https://maggun.co.kr/magazine/" rel="alternate"/>
-<id>https://maggun.co.kr/</id>
+<link href="https://massageggun.netlify.app/atom.xml" rel="self"/>
+<link href="https://massageggun.netlify.app/magazine/" rel="alternate"/>
+<id>https://massageggun.netlify.app/</id>
 <updated>2026-05-28T00:00:00Z</updated>
 <rights>© 2026 YH LAB</rights>
 <generator>마사지꾼 빌드 파이프라인</generator>
-<entry><title>야간 회식 후 60분 회복 — 출장마사지가 효율적인 이유</title><link href="https://maggun.co.kr/magazine/post-meeting-recovery/"/><id>https://maggun.co.kr/magazine/post-meeting-recovery/</id><updated>2026-04-12T00:00:00Z</updated><published>2026-04-12T00:00:00Z</published><author><name>김세영</name></author><category term="회복 가이드"/><summary type="html"><![CDATA[23시 이후 회식이 끝난 뒤 가장 빠르게 컨디션을 복구하는 흐름을 5개월간의 실 배차 로그로 설명합니다.]]></summary></entry><entry><title>스웨디시와 아로마 — 무엇을 언제 선택할까</title><link href="https://maggun.co.kr/magazine/swedish-vs-aroma/"/><id>https://maggun.co.kr/magazine/swedish-vs-aroma/</id><updated>2026-03-28T00:00:00Z</updated><published>2026-03-28T00:00:00Z</published><author><name>윤하늬</name></author><category term="코스 선택"/><summary type="html"><![CDATA[두 코스의 차이를 자문 아로마테라피스트의 시선으로 비교합니다. 결정에 도움이 되는 4가지 기준.]]></summary></entry><entry><title>출장마사지 안전 가이드 — 자문 트레이너가 검수한 7가지</title><link href="https://maggun.co.kr/magazine/in-home-safety/"/><id>https://maggun.co.kr/magazine/in-home-safety/</id><updated>2026-02-19T00:00:00Z</updated><published>2026-02-19T00:00:00Z</published><author><name>정민호</name></author><category term="안전·정책"/><summary type="html"><![CDATA[물리치료사 자문으로 정리한 가정 내 시술 환경·금기사항·응급 대응 체크리스트.]]></summary></entry>
+<entry><title>야간 회식 후 60분 회복 — 출장마사지가 효율적인 이유</title><link href="https://massageggun.netlify.app/magazine/post-meeting-recovery/"/><id>https://massageggun.netlify.app/magazine/post-meeting-recovery/</id><updated>2026-04-12T00:00:00Z</updated><published>2026-04-12T00:00:00Z</published><author><name>김세영</name></author><category term="회복 가이드"/><summary type="html"><![CDATA[23시 이후 회식이 끝난 뒤 가장 빠르게 컨디션을 복구하는 흐름을 5개월간의 실 배차 로그로 설명합니다.]]></summary></entry><entry><title>스웨디시와 아로마 — 무엇을 언제 선택할까</title><link href="https://massageggun.netlify.app/magazine/swedish-vs-aroma/"/><id>https://massageggun.netlify.app/magazine/swedish-vs-aroma/</id><updated>2026-03-28T00:00:00Z</updated><published>2026-03-28T00:00:00Z</published><author><name>윤하늬</name></author><category term="코스 선택"/><summary type="html"><![CDATA[두 코스의 차이를 자문 아로마테라피스트의 시선으로 비교합니다. 결정에 도움이 되는 4가지 기준.]]></summary></entry><entry><title>출장마사지 안전 가이드 — 자문 트레이너가 검수한 7가지</title><link href="https://massageggun.netlify.app/magazine/in-home-safety/"/><id>https://massageggun.netlify.app/magazine/in-home-safety/</id><updated>2026-02-19T00:00:00Z</updated><published>2026-02-19T00:00:00Z</published><author><name>정민호</name></author><category term="안전·정책"/><summary type="html"><![CDATA[물리치료사 자문으로 정리한 가정 내 시술 환경·금기사항·응급 대응 체크리스트.]]></summary></entry>
 </feed>

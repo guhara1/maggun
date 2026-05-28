@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
 <title>마사지꾼 출장마사지 매거진</title>
-<link>https://maggun.co.kr/magazine/</link>
-<atom:link href="https://maggun.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
+<link>https://massageggun.netlify.app/magazine/</link>
+<atom:link href="https://massageggun.netlify.app/rss.xml" rel="self" type="application/rss+xml"/>
 <description>수도권·부산 전역 24시 출장마사지 운영진·자문 트레이너가 직접 쓰는 회복 가이드.</description>
 <language>ko-KR</language>
 <copyright>© 2026 YH LAB</copyright>
-<managingEditor>help@maggun.co.kr (김유환)</managingEditor>
-<webMaster>help@maggun.co.kr (김유환)</webMaster>
-<pubDate>Thu, 28 May 2026 09:58:46 GMT</pubDate>
-<lastBuildDate>Thu, 28 May 2026 09:58:46 GMT</lastBuildDate>
+<managingEditor>help@massageggun.netlify.app (김유환)</managingEditor>
+<webMaster>help@massageggun.netlify.app (김유환)</webMaster>
+<pubDate>Thu, 28 May 2026 10:04:12 GMT</pubDate>
+<lastBuildDate>Thu, 28 May 2026 10:04:12 GMT</lastBuildDate>
 <category>건강</category>
 <category>출장마사지</category>
 <ttl>720</ttl>
 <image>
-<url>https://maggun.co.kr/assets/og-cover.jpg</url>
+<url>https://massageggun.netlify.app/assets/og-cover.jpg</url>
 <title>마사지꾼 출장마사지</title>
-<link>https://maggun.co.kr/</link>
+<link>https://massageggun.netlify.app/</link>
 <width>1200</width>
 <height>630</height>
 </image>
-<item><title>야간 회식 후 60분 회복 — 출장마사지가 효율적인 이유</title><link>https://maggun.co.kr/magazine/post-meeting-recovery/</link><guid isPermaLink="true">https://maggun.co.kr/magazine/post-meeting-recovery/</guid><description><![CDATA[23시 이후 회식이 끝난 뒤 가장 빠르게 컨디션을 복구하는 흐름을 5개월간의 실 배차 로그로 설명합니다.]]></description><author>help@maggun.co.kr (김세영)</author><category>회복 가이드</category><pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate></item><item><title>스웨디시와 아로마 — 무엇을 언제 선택할까</title><link>https://maggun.co.kr/magazine/swedish-vs-aroma/</link><guid isPermaLink="true">https://maggun.co.kr/magazine/swedish-vs-aroma/</guid><description><![CDATA[두 코스의 차이를 자문 아로마테라피스트의 시선으로 비교합니다. 결정에 도움이 되는 4가지 기준.]]></description><author>help@maggun.co.kr (윤하늬)</author><category>코스 선택</category><pubDate>Sat, 28 Mar 2026 00:00:00 GMT</pubDate></item><item><title>출장마사지 안전 가이드 — 자문 트레이너가 검수한 7가지</title><link>https://maggun.co.kr/magazine/in-home-safety/</link><guid isPermaLink="true">https://maggun.co.kr/magazine/in-home-safety/</guid><description><![CDATA[물리치료사 자문으로 정리한 가정 내 시술 환경·금기사항·응급 대응 체크리스트.]]></description><author>help@maggun.co.kr (정민호)</author><category>안전·정책</category><pubDate>Thu, 19 Feb 2026 00:00:00 GMT</pubDate></item>
+<item><title>야간 회식 후 60분 회복 — 출장마사지가 효율적인 이유</title><link>https://massageggun.netlify.app/magazine/post-meeting-recovery/</link><guid isPermaLink="true">https://massageggun.netlify.app/magazine/post-meeting-recovery/</guid><description><![CDATA[23시 이후 회식이 끝난 뒤 가장 빠르게 컨디션을 복구하는 흐름을 5개월간의 실 배차 로그로 설명합니다.]]></description><author>help@massageggun.netlify.app (김세영)</author><category>회복 가이드</category><pubDate>Sun, 12 Apr 2026 00:00:00 GMT</pubDate></item><item><title>스웨디시와 아로마 — 무엇을 언제 선택할까</title><link>https://massageggun.netlify.app/magazine/swedish-vs-aroma/</link><guid isPermaLink="true">https://massageggun.netlify.app/magazine/swedish-vs-aroma/</guid><description><![CDATA[두 코스의 차이를 자문 아로마테라피스트의 시선으로 비교합니다. 결정에 도움이 되는 4가지 기준.]]></description><author>help@massageggun.netlify.app (윤하늬)</author><category>코스 선택</category><pubDate>Sat, 28 Mar 2026 00:00:00 GMT</pubDate></item><item><title>출장마사지 안전 가이드 — 자문 트레이너가 검수한 7가지</title><link>https://massageggun.netlify.app/magazine/in-home-safety/</link><guid isPermaLink="true">https://massageggun.netlify.app/magazine/in-home-safety/</guid><description><![CDATA[물리치료사 자문으로 정리한 가정 내 시술 환경·금기사항·응급 대응 체크리스트.]]></description><author>help@massageggun.netlify.app (정민호)</author><category>안전·정책</category><pubDate>Thu, 19 Feb 2026 00:00:00 GMT</pubDate></item>
 </channel>
 </rss>

@@ -11,8 +11,8 @@ import urllib.request
 import urllib.parse
 import json
 
-BASE_URL = "https://maggun.co.kr"
-HOST = "maggun.co.kr"
+BASE_URL = "https://massageggun.netlify.app"
+HOST = "massageggun.netlify.app"
 INDEXNOW_KEY = "a8f3c2d9b54e7f1c6d3a8b2e5f9c4d7a"
 KEY_LOCATION = f"{BASE_URL}/{INDEXNOW_KEY}.txt"
 

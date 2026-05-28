@@ -5,15 +5,15 @@ SITE = {
     "brand": "마사지꾼",
     "brand_full": "마사지꾼 출장마사지",
     "tagline": "수도권·부산 전역 24시 출장마사지",
-    "domain": "maggun.co.kr",  # placeholder
-    "base_url": "https://maggun.co.kr",
+    "domain": "massageggun.netlify.app",
+    "base_url": "https://massageggun.netlify.app",
     "lang": "ko-KR",
     "locale": "ko_KR",
     "theme_color": "#0b0b0e",
     "phone_display": "0508-202-4743",
     "phone_tel": "+82508-202-4743",
     "phone_raw": "0508-202-4743",
-    "email": "help@maggun.co.kr",  # placeholder
+    "email": "help@massageggun.netlify.app",  # placeholder — 실 메일로 교체 필요
     "hours": "24시간 연중무휴",
     "open_hours_spec": [{
         "@type": "OpeningHoursSpecification",

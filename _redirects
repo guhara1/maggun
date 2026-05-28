@@ -1,0 +1,11 @@
+# Netlify _redirects
+# trailing slash 정규화 — SEO 일관성
+
+# /sitemap → /sitemap.xml
+/sitemap   /sitemap.xml   301
+/feed      /rss.xml       301
+/atom      /atom.xml      301
+
+# index.html을 명시적으로 요청한 경우 / 로 정규화
+/index.html   /   301
+/*/index.html /:splat/   301
