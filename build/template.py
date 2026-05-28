@@ -119,6 +119,9 @@ def head(title, desc, canonical, og_image=None, extra=""):
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
+<link rel="alternate" type="application/rss+xml" title="{SITE['brand']} 매거진 RSS" href="/rss.xml">
+<link rel="alternate" type="application/atom+xml" title="{SITE['brand']} 매거진 Atom" href="/atom.xml">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 <style>{CSS}</style>
 {extra}
 </head><body>"""

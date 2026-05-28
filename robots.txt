@@ -1,16 +1,75 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /api/
+# robots.txt for 마사지꾼 출장마사지 (https://maggun.co.kr)
+# Updated: 2026-05-28
 
+# ── Mainstream search bots ──────────────────────────────────
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-News
+Allow: /magazine/
+
+User-agent: Yeti
+Allow: /
+Crawl-delay: 0
+
+User-agent: NaverBot
+Allow: /
+
+User-agent: Daum
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# ── AI training crawlers (allowed) ──────────────────────────
 User-agent: GPTBot
 Allow: /
 
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-Web
+Allow: /
+
 User-agent: Google-Extended
 Allow: /
 
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# ── Aggressive scrapers (blocked) ───────────────────────────
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ── Default ─────────────────────────────────────────────────
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /*?*
+
+# ── Sitemap & feed ──────────────────────────────────────────
 Sitemap: https://maggun.co.kr/sitemap.xml
+Sitemap: https://maggun.co.kr/sitemap-news.xml
+Sitemap: https://maggun.co.kr/rss.xml
+
 Host: maggun.co.kr

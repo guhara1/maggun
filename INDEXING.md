@@ -1,0 +1,93 @@
+# 검색엔진 색인 가이드
+
+본 파일은 마사지꾼 사이트가 Google·Naver·Bing 등 주요 검색엔진에 빠르게 색인되도록 설정된 모든 파일과 절차를 정리합니다.
+
+## 생성된 파일
+
+| 파일 | 목적 |
+|---|---|
+| `sitemap.xml` | 사이트맵 인덱스 (9개 sub-sitemap 포함) |
+| `sitemap-main.xml` | 메인·About·정책 등 |
+| `sitemap-services.xml` | 서비스 6 페이지 |
+| `sitemap-therapists.xml` | 관리사 7 페이지 |
+| `sitemap-magazine.xml` | 매거진 4 페이지 |
+| `sitemap-locations.xml` | 광역+자치구 86 페이지 |
+| `sitemap-dongs-seoul.xml` | 서울 244 행정동 |
+| `sitemap-dongs-gyeonggi.xml` | 경기 369 행정동 |
+| `sitemap-dongs-incheon.xml` | 인천 83 행정동 |
+| `sitemap-dongs-busan.xml` | 부산 108 행정동 |
+| `sitemap-news.xml` | Google News 사이트맵 (매거진 3편) |
+| `rss.xml` | RSS 2.0 피드 |
+| `atom.xml` | Atom 1.0 피드 |
+| `robots.txt` | 크롤러 정책 (Yeti·NaverBot·Daum·Googlebot·Bing·GPTBot 명시) |
+| `a8f3c2d9b54e7f1c6d3a8b2e5f9c4d7a.txt` | IndexNow 인증 키 |
+| `humans.txt` | 사람 작성 명시 (E-E-A-T 부수 신호) |
+
+## 배포 후 절차
+
+### 1. Google Search Console (필수)
+1. https://search.google.com/search-console 접속
+2. 속성 추가 → `https://maggun.co.kr`
+3. 인증 방법: HTML 태그 → 메인 페이지에 이미 삽입돼 있음 → "확인" 클릭
+4. 좌측 메뉴 → Sitemaps → `sitemap.xml` 제출
+5. URL 검사 → 핵심 페이지 5~10개 "색인 요청" 클릭
+
+### 2. Naver Search Advisor (필수)
+1. https://searchadvisor.naver.com 접속
+2. 웹마스터도구 → 사이트 추가 → `https://maggun.co.kr`
+3. 인증 방법: HTML 태그 → 메인 페이지에 이미 삽입돼 있음 → "확인" 클릭
+4. 좌측 메뉴 → 요청 → 사이트맵 제출 → `sitemap.xml`
+5. 좌측 메뉴 → 요청 → RSS 제출 → `rss.xml`
+6. 좌측 메뉴 → 요청 → 웹페이지 수집 → 핵심 페이지 5~10개 수동 요청
+
+### 3. Bing Webmaster Tools (선택 — IndexNow 자동 연동됨)
+1. https://www.bing.com/webmasters 접속
+2. 사이트 추가 → `https://maggun.co.kr`
+3. Google Search Console 가져오기 옵션 사용 가능
+4. Sitemap 제출 → `sitemap.xml`
+
+### 4. IndexNow 즉시 색인 (배포할 때마다 자동 실행 권장)
+```bash
+# 핵심 페이지 30개 일괄 핑
+python3 ping_search_engines.py
+
+# 특정 페이지만 핑 (예: 새 글)
+python3 ping_search_engines.py /magazine/new-article/
+```
+
+IndexNow 한 번 호출 → Bing·Yandex·Naver Yeti·Seznam 등에 동시 전파.
+
+## 빠른 색인을 위한 핵심 신호 (적용 완료)
+
+| 신호 | 상태 |
+|---|---|
+| Sitemap index + 분할 sub-sitemap | ✓ 9개 분할 |
+| lastmod 날짜 명시 | ✓ 매 URL에 추가 |
+| Image sitemap (image:image) | ✓ og-cover 첨부 |
+| Google News sitemap | ✓ 매거진 3편 |
+| RSS 2.0 + Atom 1.0 | ✓ HTML head에 자동 발견 링크 |
+| robots.txt — Yeti·NaverBot·Daum 명시 | ✓ Crawl-delay 0 |
+| JSON-LD Organization/LocalBusiness/Article/FAQ | ✓ 모든 페이지 |
+| og:image (1200×630) + preferred image | ✓ secure_url/alt/type 추가 |
+| Google·Naver site-verification 메타 | ✓ 메인에만 삽입 |
+| IndexNow 키 파일 (32자 hex) | ✓ 루트 배포 |
+| 단일 H1 + Breadcrumb + Canonical | ✓ 914 페이지 전부 |
+| 모바일 친화 + HTTPS + INP 최적화 | ✓ 인라인 CSS, JS 최소화 |
+| hreflang ko-KR + x-default | ✓ |
+
+## 색인 속도 예상
+
+| 검색엔진 | 첫 색인 | 전체 색인 완료 |
+|---|---|---|
+| Bing (IndexNow 연동) | 즉시~수 시간 | 1~3일 |
+| Naver Yeti (IndexNow + RSS) | 1~3일 | 1~2주 |
+| Google | 1~7일 (URL 검사 시 즉시) | 2~6주 (페이지 수 많음) |
+| Daum | 1~2주 | 2~4주 |
+
+## 색인 속도 가속 팁
+
+1. **외부 도메인 백링크 1~2개 확보** — Google이 가장 빠르게 발견하는 신호
+2. **GSC URL 검사 → 색인 요청을 매일 5~10개씩 분산 클릭** (일일 약 10건 한도)
+3. **RSS 피드를 Feedly·Inoreader 등에 직접 등록** → 외부 크롤러 신호
+4. **Naver Search Advisor → 요청 → 웹페이지 수집** 매일 5건 한도 적극 활용
+5. **소셜 미디어 공유** (X, 카카오톡 오픈채팅 등) → 외부 신호
