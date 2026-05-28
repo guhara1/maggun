@@ -465,8 +465,12 @@ def dong_page(city_slug, dong):
 <div class="signoff">📝 책임 편집: 본사 {district_name} 운영팀 · 자문 검수: 박지연(KSPO)·정민호(PT)·윤하늬(IFA) · 데이터: 2025-11~2026-03 실 배차 로그 · 최종 갱신: 2026-05-28</div>
 </section>{cta_band(title=f'{name} 24시 예약', desc=f'평균 {eta}분 도착 — {near1} 인근까지 매니저가 즉시 출발합니다.')}"""
 
-    title = f"{name} 출장마사지 — 마사지꾼 평균 {eta}분·월 {st['monthly_dispatch']}건 · {district_name}"
-    desc = f"{city['name_ko']} {district_name} {name} 출장마사지. {char_line}. 월 배차 {st['monthly_dispatch']}건, 평균 도착 {eta}분, 단골 재지정 {st['repeat_rate']}%, 평점 ★{st['rating_dong']}. 24시 {SITE['phone_display']}."
+    # 네이버 한도: 제목 40자·설명 80자 — 동 이름 길이에 따라 안전한 짧은 형태 사용
+    short_city = city.get("short", city['name_ko'][:2])
+    title_full = f"{name} 출장마사지 — 마사지꾼 평균 {eta}분 ({district_name})"
+    title = title_full if len(title_full) <= 40 else f"{name} 출장마사지 — 마사지꾼 평균 {eta}분"
+    desc_full = f"{short_city} {district_name} {name} 출장마사지. 평균 {eta}분, 평점 ★{st['rating_dong']}, 24시."
+    desc = desc_full if len(desc_full) <= 80 else f"{name} 출장마사지. 평균 {eta}분, 평점 ★{st['rating_dong']}, 24시 운영."
 
     review_items = [{
         "@type":"Review","author":{"@type":"Person","name":r["name"]},

@@ -39,8 +39,8 @@ def location_hub():
     "콜 시점에 정확한 가용성을 안내드립니다.",
 ])}
 </section>{cta_band()}"""
-    title = f"전체 지역 — {SITE['brand_full']} 82개 행정구"
-    desc = f"서울 25 · 경기 31 · 인천 10 · 부산 16 — {SITE['brand_full']} 전체 82개 행정구. 평균 도착 32분, 권역별 동(洞) 단위 데이터."
+    title = f"전체 지역 — 마사지꾼 82개 행정구"
+    desc = f"서울25·경기31·인천10·부산16 전체 82개 행정구. 평균 도착 32분, 동(洞) 단위 데이터."
     return page(title, desc, "/locations/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("지역","/locations/")])], active="locations")
 
 
@@ -64,8 +64,8 @@ def city_hub(city_slug):
     "응급 상황 발생 시 본사 응급팀이 24시간 대응합니다.",
 ])}
 </section>{cta_band(title=f'{c["name_ko"]} 24시 예약', desc=f'평균 {avg:.0f}분 도착 — 전화 한 통으로 가까운 매니저가 출발합니다.')}"""
-    title = f"{c['name_ko']} 출장마사지 — {SITE['brand']} {c['count']}개 {('자치구' if city_slug=='seoul' else '시·구·군')}"
-    desc = f"{c['name_ko']} {c['count']}개 행정구 — {SITE['brand_full']} 평균 도착 {avg:.0f}분. {', '.join(d['name_ko'] for d in c['districts'][:5])} 등."
+    title = f"{c['name_ko']} 출장마사지 — 마사지꾼 {c['count']}개구"
+    desc = f"{c['name_ko']} {c['count']}개 행정구 출장마사지. 평균 도착 {avg:.0f}분, 24시 운영."
     return page(title, desc, f"/locations/{city_slug}/", body, ld_objs=[
         organization_ld(),
         breadcrumb_ld([("홈","/"),("지역","/locations/"),(c['name_ko'],f"/locations/{city_slug}/")]),
@@ -359,8 +359,8 @@ def district_page(d):
         "review": review_items,
     }
 
-    title = f"{d['name_ko']} 출장마사지 — {SITE['brand']} 평균 {avg}분 도착 · 24시"
-    desc = f"{d['name_ko']} {len(d['dongs'])}개 동(洞) 평균 도착 {avg}분. {d['character']}. 야간 콜 비중 {d['night_rate']}%. {SITE['brand_full']} 24시 운영."
+    title = f"{d['name_ko']} 출장마사지 — 마사지꾼 평균 {avg}분"
+    desc = f"{d['name_ko']} {len(d['dongs'])}개 동 출장마사지. 평균 {avg}분, 야간 콜 {d['night_rate']}%, 24시."
 
     return page(title, desc, f"/locations/{city_slug}/{d['slug']}/", body, ld_objs=[
         organization_ld(),

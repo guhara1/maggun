@@ -50,8 +50,8 @@ def service_hub():
     faqs = [(f"가장 인기 있는 코스는 무엇인가요?","90분 스웨디시입니다. 5개월간 전체 배차의 38%를 차지했습니다."),
             ("매니저 추천이 가능한가요?","네, 본사 디스패처가 권역·상황에 맞춰 추천해드립니다."),
             ("처음 받는데 무엇이 좋을까요?","90분 스웨디시를 가장 자주 권장합니다.")]
-    title = f"서비스 전체 — {SITE['brand_full']} 5가지 코스"
-    desc = f"스웨디시·아로마·타이·로미로미·스포츠 — {SITE['brand_full']}의 5가지 코스 안내. 코스 선택 가이드, 길이별 차이, 안전 가이드, 가격 정책."
+    title = f"서비스 전체 — 마사지꾼 5가지 코스"
+    desc = f"스웨디시·아로마·타이·로미로미·스포츠 5가지 코스 안내. 코스 선택·가격·안전 가이드."
     return page(title, desc, "/service/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("서비스","/service/")]), faq_ld(faqs)], active="service")
 
 
@@ -108,8 +108,8 @@ def service_detail(s):
             ("강도 조절이 가능한가요?", "가능합니다. 시술 중에도 즉시 조절 가능하니 편하게 말씀해주세요."),
             (f"{s['name_ko']}을(를) 권하지 않는 경우가 있나요?", "임신·심혈관·급성 염증·수술 직후 2주 이내 등이 해당됩니다. 콜 시점에 안내드립니다."),
             ("몇 분 코스가 가장 좋을까요?", f"{s['name_ko']}은(는) {s['best_min']}분이 가장 자주 선택됩니다.")]
-    title = f"{s['name_ko']} 출장마사지 — {SITE['brand_full']} ({s['duration_options'][0][0]}분 {s['duration_options'][0][1]:,}원부터)"
-    desc = f"{s['name_ko']}: {s['tag']} 자문 트레이너 가이드라인 적용. {s['best_min']}분 코스가 인기. {SITE['brand_full']} 24시 출장."
+    title = f"{s['name_ko']} 출장마사지 — 마사지꾼 ({s['duration_options'][0][0]}분 {s['duration_options'][0][1]//10000}만원~)"
+    desc = f"{s['name_ko']} 출장마사지. {s['best_min']}분 코스 인기. 자문 트레이너 가이드. 24시."
 
     service_ld = {
         "@context": "https://schema.org",

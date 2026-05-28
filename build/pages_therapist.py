@@ -46,8 +46,8 @@ def therapist_hub():
     faqs = [("매니저 국적을 고를 수 있나요?","네, 6개국 매니저 중 권역별 가용 인원을 안내드립니다."),
             ("매니저 재지정이 가능한가요?","가능합니다. 콜 시점에 이전 매니저 이니셜을 알려주세요."),
             ("외국인 매니저는 한국어가 가능한가요?","대부분 기본 한국어가 가능하며, 본사 통역도 24시간 대기합니다.")]
-    title = f"관리사 소개 — {SITE['brand_full']} 6개국 156명"
-    desc = f"한국·중국·태국·베트남·러시아·일본 — {SITE['brand_full']}의 매니저 6개국 156명. 80시간 교육, 자문 트레이너 검수, 실시간 평가 시스템."
+    title = f"관리사 소개 — 마사지꾼 6개국 156명"
+    desc = f"한국·중국·태국·베트남·러시아·일본 매니저 156명. 본사 80시간 교육·실시간 평가."
     return page(title, desc, "/therapists/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("관리사","/therapists/")]), faq_ld(faqs)], active="therapists")
 
 
@@ -82,8 +82,8 @@ def therapist_detail(t):
     faqs = [(f"{t['name_ko']} 매니저는 한국어가 가능한가요?","기본 한국어 의사소통은 가능하며, 본사 통역이 24시간 대기 중입니다."),
             (f"{t['name_ko']} 매니저는 어떤 코스를 잘하나요?", f"{t['strength']} 코스에 강점이 있습니다."),
             (f"{t['name_ko']} 매니저를 지정할 수 있나요?","가능합니다. 권역에 따라 가용성이 달라 콜 시점에 안내드립니다.")]
-    title = f"{t['name_ko']} 출장마사지 — {SITE['brand_full']} ({t['count']}명 활동)"
-    desc = f"{t['name_ko']}의 손기술 특징: {t['strength']}. {t['exp_avg']} · 활동 {t['count']}명 · 본사 80시간 교육. {SITE['brand_full']} 24시 출장."
+    title = f"{t['name_ko']} 출장마사지 — 마사지꾼 ({t['count']}명)"
+    desc = f"{t['name_ko']} 손기술: {t['strength']}. {t['exp_avg']}·활동 {t['count']}명. 24시 출장."
     return page(title, desc, f"/therapists/{t['slug']}/", body, ld_objs=[
         organization_ld(),
         breadcrumb_ld([("홈","/"),("관리사","/therapists/"),(t['name_ko'],f"/therapists/{t['slug']}/")]),

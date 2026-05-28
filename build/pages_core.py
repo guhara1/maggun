@@ -140,8 +140,8 @@ def index_page():
 </section>
 """ + cta_band()
 
-    title = f"{SITE['brand_full']} — 수도권·부산 24시 출장마사지 · 평균 32분 도착"
-    desc = f"서울·경기·인천·부산 82개 행정구 24시 출장마사지. 평균 32분 도착, 자문 트레이너 가이드라인, 156명 활동 매니저, 평점 4.96. 예약 {SITE['phone_display']}."
+    title = f"마사지꾼 — 수도권·부산 24시 출장마사지"
+    desc = f"수도권·부산 82개 행정구 24시 출장마사지. 평균 32분, 평점 ★4.96. {SITE['phone_display']}"
 
     local_ld = {
         "@context": "https://schema.org",
@@ -243,8 +243,8 @@ def about_page():
 <div class="signoff">📝 책임 편집: <b>{rep}</b> · 최종 갱신: <b>2026-05-20</b> · 문의: <b><a href="mailto:{email}">{email}</a></b></div>
 </section>""".format(rep=SITE['company']['representative'], email=SITE['email']) + cta_band()
 
-    title = f"브랜드 소개 — {SITE['brand_full']}"
-    desc = f"{SITE['brand_full']}의 운영 철학, 본사 운영진 3명, 자문 트레이너 3명, 그리고 5개월 23,700건 배차 로그로 검증된 운영 원칙."
+    title = f"브랜드 소개 — 마사지꾼"
+    desc = f"마사지꾼 운영 철학·운영진 3명·자문 트레이너 3명·5개월 23,700건 배차 로그 기반 신뢰."
 
     return page(title, desc, "/about/", body, ld_objs=[
         organization_ld(),
@@ -299,8 +299,8 @@ def pricing_page():
     faqs = [("심야 할증이 있나요?","없습니다. 표기 가격이 24시간 동일하게 적용됩니다."),
             ("출장비는 따로 받나요?","수도권·부산 도심은 출장비가 포함된 가격입니다. 외곽 일부 권역만 별도 안내드립니다."),
             ("환불은 언제 가능한가요?","시술 시작 전까지 100% 환불 가능합니다.")]
-    title = f"요금표 — {SITE['brand']} 출장마사지 가격"
-    desc = f"스웨디시 60분 8만원, 아로마 60분 9만원, 타이·로미로미·스포츠 전 코스 가격. 심야 할증 없음, 사전 결제 없음, 환불 정책 명시."
+    title = f"요금표 — 마사지꾼 출장마사지 가격"
+    desc = f"스웨디시·아로마·타이·로미로미·스포츠 전 코스 가격. 심야 할증·사전 결제 없음."
     return page(title, desc, "/pricing/", body, ld_objs=[
         organization_ld(),
         breadcrumb_ld([("홈","/"),("요금","/pricing/")]),
@@ -355,8 +355,8 @@ def reviews_page():
         "ratingValue": SITE["stats"]["rating"],
         "reviewCount": SITE["stats"]["review_count"],
     }
-    title = f"실 후기 — {SITE['brand_full']} (평점 ★{SITE['stats']['rating']})"
-    desc = f"{SITE['brand_full']} 누적 {SITE['stats']['review_count']:,}개 리뷰 중 최근 한 달 후기 {len(GLOBAL_REVIEWS)}편. 시술 다음날 SMS로 직접 수집된 1차 후기."
+    title = f"실 후기 — 마사지꾼 (★{SITE['stats']['rating']})"
+    desc = f"누적 {SITE['stats']['review_count']:,}개 리뷰 중 최근 후기 {len(GLOBAL_REVIEWS)}편. 시술 다음날 SMS 수집 1차 후기."
     return page(title, desc, "/reviews/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("후기","/reviews/")]), ld_reviews, agg])
 
 
@@ -394,8 +394,8 @@ def contact_page():
     "보도자료·이미지 자료는 요청 시 24시간 내 제공해드립니다.",
 ])}
 </section>{cta_band()}"""
-    title = f"문의·예약 — {SITE['brand_full']} 24시 고객센터"
-    desc = f"전화 {SITE['phone_display']} (24시 응답) · 이메일 {SITE['email']}. {SITE['hours']} 운영. 호텔·오피스텔 직접 도착, 영어·일본어·중국어 매니저 가능."
+    title = f"문의·예약 — 마사지꾼 24시 고객센터"
+    desc = f"전화 {SITE['phone_display']} 24시 응답. 호텔·오피스텔 직접 도착, 다국어 매니저 가능."
     return page(title, desc, "/contact/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("문의","/contact/")])])
 
 
@@ -434,8 +434,8 @@ def privacy_page():
     f"소속: {SITE['company']['legal_name']} (사업자등록번호 {SITE['company']['biz_no']})",
 ])}
 </section>{cta_band(title='무엇이든 편하게 문의해주세요.', desc='개인정보 관련 요청도 24시간 응답해드립니다.')}"""
-    title = "개인정보처리방침 — " + SITE["brand_full"]
-    desc = f"{SITE['brand_full']}의 개인정보 수집·이용·보유·제3자 제공·이용자 권리 안내. 책임자: {SITE['company']['privacy_officer']}."
+    title = "개인정보처리방침 — 마사지꾼"
+    desc = f"마사지꾼 개인정보 수집·이용·보유·제3자 제공·이용자 권리 안내."
     return page(title, desc, "/policy/privacy/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("개인정보처리방침","/policy/privacy/")])])
 
 
@@ -476,8 +476,8 @@ def terms_page():
     "민원·환불 분쟁은 우선 회사 고객센터를 통해 협의로 해결합니다.",
 ])}
 </section>{cta_band()}"""
-    title = "이용약관 — " + SITE["brand_full"]
-    desc = f"{SITE['brand_full']}의 서비스 내용, 예약·결제·환불, 이용자·회사 의무, 분쟁 해결 절차 안내."
+    title = "이용약관 — 마사지꾼"
+    desc = f"마사지꾼 서비스 내용·예약·결제·환불·이용자·회사 의무·분쟁 해결 절차."
     return page(title, desc, "/policy/terms/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("이용약관","/policy/terms/")])])
 
 
@@ -505,6 +505,6 @@ def youth_page():
     "방송통신심의위원회 신고: 1377",
 ])}
 </section>{cta_band()}"""
-    title = "청소년보호정책 — " + SITE["brand_full"]
-    desc = f"{SITE['brand_full']}의 청소년 이용 제한, 유해 정보 차단, 청소년보호책임자 안내."
+    title = "청소년보호정책 — 마사지꾼"
+    desc = f"마사지꾼 청소년 이용 제한·유해 정보 차단·청소년보호책임자 안내."
     return page(title, desc, "/policy/youth/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("청소년보호정책","/policy/youth/")])])

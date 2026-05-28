@@ -27,8 +27,8 @@ def magazine_hub():
     f"기고 문의: {SITE['email']}",
 ])}
 </section>{cta_band()}"""
-    title = f"매거진 — {SITE['brand_full']} 회복 가이드"
-    desc = f"{SITE['brand_full']} 운영진·자문 트레이너가 직접 쓰는 회복 가이드. 5개월 배차 로그 기반 분석, 코스 선택 가이드, 안전 정책."
+    title = f"매거진 — 마사지꾼 회복 가이드"
+    desc = f"마사지꾼 운영진·자문 트레이너가 직접 쓰는 회복 가이드. 5개월 배차 로그 기반."
     return page(title, desc, "/magazine/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("매거진","/magazine/")])], active="magazine")
 
 
@@ -116,8 +116,11 @@ def magazine_article(a):
 <div class="signoff">📝 책임 저자: <b>{a['author']}</b> · 자문 검수: <b>본사 자문 트레이너 3인</b> · 최종 갱신: <b>{a['date']}</b></div>
 </section>{cta_band()}"""
 
-    title = f"{a['title']} — {SITE['brand']} 매거진"
-    desc = a["lead"]
+    # 제목 40자, 설명 80자 한도 — 글 제목/lead가 길면 자동 절단
+    t = a["title"]
+    title = t if len(t) <= 40 else t[:38] + "…"
+    d = a["lead"]
+    desc = d if len(d) <= 80 else d[:77] + "…"
 
     article_ld = {
         "@context": "https://schema.org",
