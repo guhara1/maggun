@@ -76,6 +76,13 @@ def head(title, desc, canonical, og_image=None, extra=""):
     if not og_image:
         og_image = f"{BASE_URL}/assets/og-cover.jpg"
     canonical_full = BASE_URL + canonical
+    # 메인 페이지에만 검색엔진 소유 확인 메타 삽입
+    verify = ""
+    if canonical == "/":
+        verify = (
+            '<meta name="google-site-verification" content="MU_vE-O28ixg9Dcxc3NG_yDEMbtaCnBohs289fRl8P8">\n'
+            '<meta name="naver-site-verification" content="dc410e1bc9a0ecaefc686580cb0fd684784ecc42">\n'
+        )
     return f"""<!doctype html><html lang="ko-KR"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -84,7 +91,7 @@ def head(title, desc, canonical, og_image=None, extra=""):
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <meta name="googlebot" content="index,follow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>{title}</title>
+{verify}<title>{title}</title>
 <meta name="description" content="{desc}">
 <meta name="author" content="{SITE['brand_full']} 편집팀">
 <link rel="canonical" href="{canonical_full}">
