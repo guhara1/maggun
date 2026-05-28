@@ -81,7 +81,7 @@ def head(title, desc, canonical, og_image=None, extra=""):
     if canonical == "/":
         verify = (
             '<meta name="google-site-verification" content="MU_vE-O28ixg9Dcxc3NG_yDEMbtaCnBohs289fRl8P8">\n'
-            '<meta name="naver-site-verification" content="dc410e1bc9a0ecaefc686580cb0fd684784ecc42">\n'
+            '<meta name="naver-site-verification" content="88c8e632406a50ca56f95538c18ebc5b033cd95a">\n'
         )
     return f"""<!doctype html><html lang="ko-KR"><head>
 <meta charset="utf-8">
