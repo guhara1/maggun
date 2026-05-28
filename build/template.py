@@ -97,12 +97,17 @@ def head(title, desc, canonical, og_image=None, extra=""):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canonical_full}">
 <meta property="og:image" content="{og_image}">
+<meta property="og:image:secure_url" content="{og_image}">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{title}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{title}">
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="{og_image}">
+<meta name="twitter:image:alt" content="{title}">
+<link rel="image_src" href="{og_image}">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
