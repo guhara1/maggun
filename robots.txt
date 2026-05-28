@@ -67,9 +67,9 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /*?*
 
-# ── Sitemap & feed ──────────────────────────────────────────
+# ── Sitemap & RSS feed ──────────────────────────────────────
+# 전 페이지: sitemap.xml | 매거진 글: rss.xml (분리 운영)
 Sitemap: https://massageggun.netlify.app/sitemap.xml
-Sitemap: https://massageggun.netlify.app/sitemap-news.xml
 Sitemap: https://massageggun.netlify.app/rss.xml
 
 Host: massageggun.netlify.app

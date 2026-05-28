@@ -122,9 +122,9 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /*?*
 
-# ── Sitemap & feed ──────────────────────────────────────────
+# ── Sitemap & RSS feed ──────────────────────────────────────
+# 전 페이지: sitemap.xml | 매거진 글: rss.xml (분리 운영)
 Sitemap: {SITE['base_url']}/sitemap.xml
-Sitemap: {SITE['base_url']}/sitemap-news.xml
 Sitemap: {SITE['base_url']}/rss.xml
 
 Host: {SITE['domain']}
@@ -169,103 +169,31 @@ def write_favicon_svg():
 TODAY = "2026-05-28"
 
 
-def _sitemap_xml(items):
-    """sitemap urlset — items: list of dict {loc, pri, freq, lastmod, image?}"""
-    rows = []
-    for it in items:
-        lastmod = it.get("lastmod", TODAY)
-        img = ""
-        if it.get("image"):
-            img = f'<image:image><image:loc>{it["image"]}</image:loc></image:image>'
-        rows.append(
-            f'  <url><loc>{SITE["base_url"]}{it["loc"]}</loc>'
-            f'<lastmod>{lastmod}</lastmod>'
-            f'<changefreq>{it["freq"]}</changefreq>'
-            f'<priority>{it["pri"]}</priority>'
-            f'{img}</url>'
-        )
-    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
-            'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
-            + "\n".join(rows) + "\n</urlset>")
+def write_sitemap(urls):
+    """단일 통합 sitemap.xml — 매거진 제외 (매거진은 rss.xml로 분리 운영).
 
-
-def write_sitemaps(urls):
-    """sitemap index + 분할 sitemap. 카테고리별로 나눠 크롤링 효율 ↑."""
+    Google 권장: 50,000 URL 이하면 단일 사이트맵 권장. 현재 ~910개라 분할 불필요.
+    매거진 글은 rss.xml/atom.xml에서 별도 발견 채널로 운영.
+    """
     og = f"{SITE['base_url']}/assets/og-cover.jpg"
-
-    # 카테고리 분할
-    cats = {
-        "main": [],      # /, about, pricing, reviews, contact, policy
-        "services": [],  # /service/*
-        "therapists": [],
-        "magazine": [],
-        "locations": [], # /locations/{city}/ + /locations/{city}/{district}/
-        "dongs-seoul": [],
-        "dongs-gyeonggi": [],
-        "dongs-incheon": [],
-        "dongs-busan": [],
-    }
-    for loc, pri, freq in urls:
-        item = {"loc": loc, "pri": pri, "freq": freq, "lastmod": TODAY, "image": og}
-        if loc.startswith("/service/"):
-            cats["services"].append(item)
-        elif loc.startswith("/therapists/"):
-            cats["therapists"].append(item)
-        elif loc.startswith("/magazine/"):
-            cats["magazine"].append(item)
-        elif loc.startswith("/locations/seoul/") and "/dong/" in loc:
-            cats["dongs-seoul"].append(item)
-        elif loc.startswith("/locations/gyeonggi/") and "/dong/" in loc:
-            cats["dongs-gyeonggi"].append(item)
-        elif loc.startswith("/locations/incheon/") and "/dong/" in loc:
-            cats["dongs-incheon"].append(item)
-        elif loc.startswith("/locations/busan/") and "/dong/" in loc:
-            cats["dongs-busan"].append(item)
-        elif loc.startswith("/locations/"):
-            cats["locations"].append(item)
-        else:
-            cats["main"].append(item)
-
-    # 개별 sitemap 파일
-    sitemap_files = []
-    for name, items in cats.items():
-        if not items: continue
-        fname = f"sitemap-{name}.xml"
-        (OUT / fname).write_text(_sitemap_xml(items), encoding="utf-8")
-        sitemap_files.append(fname)
-
-    # sitemap index
-    idx_rows = "\n".join(
-        f'  <sitemap><loc>{SITE["base_url"]}/{f}</loc><lastmod>{TODAY}</lastmod></sitemap>'
-        for f in sitemap_files
-    )
-    idx = ('<?xml version="1.0" encoding="UTF-8"?>\n'
-           '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-           + idx_rows + "\n</sitemapindex>")
-    (OUT / "sitemap.xml").write_text(idx, encoding="utf-8")
-
-    return sitemap_files
-
-
-def write_news_sitemap():
-    """Google News 사이트맵 — 매거진 3편 (48시간 이내 글만 효과)."""
-    from data.catalog import MAGAZINE
     rows = []
-    for a in MAGAZINE:
+    for loc, pri, freq in urls:
+        if loc.startswith("/magazine/"):
+            continue  # 매거진은 RSS로 분리
         rows.append(
-            f'  <url><loc>{SITE["base_url"]}/magazine/{a["slug"]}/</loc>'
-            f'<news:news>'
-            f'<news:publication><news:name>{SITE["brand_full"]}</news:name><news:language>ko</news:language></news:publication>'
-            f'<news:publication_date>{a["date"]}</news:publication_date>'
-            f'<news:title>{a["title"]}</news:title>'
-            f'</news:news></url>'
+            f'  <url><loc>{SITE["base_url"]}{loc}</loc>'
+            f'<lastmod>{TODAY}</lastmod>'
+            f'<changefreq>{freq}</changefreq>'
+            f'<priority>{pri}</priority>'
+            f'<image:image><image:loc>{og}</image:loc></image:image>'
+            f'</url>'
         )
     body = ('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
-            'xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">\n'
+            'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
             + "\n".join(rows) + "\n</urlset>")
-    (OUT / "sitemap-news.xml").write_text(body, encoding="utf-8")
+    (OUT / "sitemap.xml").write_text(body, encoding="utf-8")
+    return len(rows)
 
 
 def write_rss():
@@ -432,8 +360,7 @@ def main():
     write_robots()
     write_manifest()
     write_favicon_svg()
-    sitemap_files = write_sitemaps(urls)
-    write_news_sitemap()
+    sitemap_count = write_sitemap(urls)
     write_rss()
     write_atom()
     write_indexnow_key()
@@ -442,8 +369,8 @@ def main():
     # 보고
     n = len(urls)
     print(f"✅ Built {n} pages")
-    print(f"   Sitemap index → {len(sitemap_files)} sub-sitemaps: {', '.join(sitemap_files)}")
-    print(f"   Feeds: rss.xml, atom.xml, sitemap-news.xml")
+    print(f"   sitemap.xml: {sitemap_count} URLs (매거진 제외)")
+    print(f"   rss.xml / atom.xml: 매거진 전용 피드")
     print(f"   IndexNow key file generated")
     # 디렉토리 트리 요약
     by_section = {}
