@@ -1,5 +1,5 @@
-# robots.txt for 마사지꾼 출장마사지 (https://massageggun.netlify.app)
-# Updated: 2026-05-28
+# robots.txt for 마사지꾼 출장마사지 (https://maggun.netlify.app)
+# Updated: 2026-06-29
 
 # ── Mainstream search bots ──────────────────────────────────
 User-agent: Googlebot
@@ -69,7 +69,7 @@ Disallow: /*?*
 
 # ── Sitemap & RSS feed ──────────────────────────────────────
 # 전 페이지: sitemap.xml | 매거진 글: rss.xml (분리 운영)
-Sitemap: https://massageggun.netlify.app/sitemap.xml
-Sitemap: https://massageggun.netlify.app/rss.xml
+Sitemap: https://maggun.netlify.app/sitemap.xml
+Sitemap: https://maggun.netlify.app/rss.xml
 
-Host: massageggun.netlify.app
+Host: maggun.netlify.app

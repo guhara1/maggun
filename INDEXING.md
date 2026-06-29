@@ -1,8 +1,8 @@
-# 검색엔진 색인 가이드 (massageggun.netlify.app)
+# 검색엔진 색인 가이드 (maggun.netlify.app)
 
 본 파일은 마사지꾼 사이트가 Google·Naver·Bing 등 주요 검색엔진에 빠르게 색인되도록 설정된 모든 파일과 절차를 정리합니다.
 
-**도메인**: https://massageggun.netlify.app
+**도메인**: https://maggun.netlify.app
 
 ## 생성된 파일
 
@@ -30,7 +30,7 @@
 
 ## 중요 — 새 도메인에서 재설정 필요
 
-이전 메인에 들어있던 `google-site-verification` / `naver-site-verification` 토큰은 다른 속성에 발급된 것입니다. **새 도메인(massageggun.netlify.app)에서는 새 토큰을 발급받아 교체해야 인증됩니다.**
+이전 메인에 들어있던 `google-site-verification` / `naver-site-verification` 토큰은 다른 속성에 발급된 것입니다. **새 도메인(maggun.netlify.app)에서는 새 토큰을 발급받아 교체해야 인증됩니다.**
 
 `build/template.py`의 `head()` 함수 내 두 줄을 새 토큰으로 교체 후 `python3 build.py` 재실행:
 ```python
@@ -43,21 +43,21 @@
 ### 1. Netlify 배포 확인
 ```bash
 # 정적 파일을 그대로 Netlify에 푸시 → 자동 배포됨
-# Netlify 사이트 설정: massageggun.netlify.app
+# Netlify 사이트 설정: maggun.netlify.app
 # Publish directory: . (루트)
 # Build command: (없음 — 사전 빌드된 정적 파일)
 ```
 
 ### 2. Google Search Console (필수)
 1. https://search.google.com/search-console 접속
-2. 속성 추가 → URL 접두어 → `https://massageggun.netlify.app`
+2. 속성 추가 → URL 접두어 → `https://maggun.netlify.app`
 3. 인증 방법: HTML 태그 → 받은 토큰을 `build/template.py`에 삽입 → 재빌드 → 배포 → "확인" 클릭
 4. 좌측 메뉴 → Sitemaps → `sitemap.xml` 제출
 5. URL 검사 → 핵심 페이지 5~10개 "색인 요청" 클릭
 
 ### 3. Naver Search Advisor (필수)
 1. https://searchadvisor.naver.com 접속
-2. 웹마스터도구 → 사이트 추가 → `https://massageggun.netlify.app`
+2. 웹마스터도구 → 사이트 추가 → `https://maggun.netlify.app`
 3. 인증 방법: HTML 태그 → 받은 토큰을 `build/template.py`에 삽입 → 재빌드 → 배포 → "확인" 클릭
 4. 좌측 메뉴 → 요청 → 사이트맵 제출 → `sitemap.xml`
 5. 좌측 메뉴 → 요청 → RSS 제출 → `rss.xml`
@@ -67,7 +67,7 @@
 
 ### 4. Bing Webmaster Tools (IndexNow 자동 연동)
 1. https://www.bing.com/webmasters 접속
-2. 사이트 추가 → `https://massageggun.netlify.app`
+2. 사이트 추가 → `https://maggun.netlify.app`
 3. Google Search Console 가져오기 옵션 사용 가능
 4. Sitemap 제출 → `sitemap.xml`
 

@@ -10,8 +10,23 @@ from data.incheon_dongs import DONGS as IC_DONGS
 from data.busan_dongs import DONGS as BS_DONGS
 from template import (
     page, note_card, faq_block, faq_ld, breadcrumb_html, cta_band,
-    section_head, organization_ld, breadcrumb_ld
+    section_head, organization_ld, breadcrumb_ld, ilink_section,
 )
+
+
+def _service_links():
+    return [(f"/service/{s['slug']}/", f"{s['name_ko']} 출장마사지") for s in SERVICES]
+
+
+def _city_links(exclude=None):
+    return [(f"/locations/{slug}/", f"{c['name_ko']} 출장마사지")
+            for slug, c in CITIES.items() if slug != exclude]
+
+
+def _district_links(city_slug, exclude=None, n=12):
+    c = CITIES[city_slug]
+    return [(f"/locations/{city_slug}/{d['slug']}/", f"{d['name_ko']} 출장마사지")
+            for d in c["districts"] if d["slug"] != exclude][:n]
 
 
 def location_hub():
@@ -38,7 +53,18 @@ def location_hub():
     "경기·인천·부산 도심권은 24시간 가용성이 있으나, 외곽은 22시 이후 가용 매니저가 줄어듭니다.",
     "콜 시점에 정확한 가용성을 안내드립니다.",
 ])}
-</section>{cta_band()}"""
+</section>
+{ilink_section(
+    "POPULAR AREAS",
+    "지역·코스별 인기 출장마사지 바로가기",
+    "서울·경기·인천·부산 인기 행정구와 코스별 페이지를 한 번에 모았습니다.",
+    [
+        ("서울 자치구별 출장마사지", _district_links("seoul", n=13)),
+        ("경기·인천 권역별 출장마사지", _district_links("gyeonggi", n=9) + _district_links("incheon", n=5)),
+        ("부산 구·군별 출장마사지", _district_links("busan", n=10)),
+        ("코스별 인기 출장마사지", _service_links()),
+    ],
+)}{cta_band()}"""
     title = f"전체 지역 — 마사지꾼 82개 행정구"
     desc = f"서울25·경기31·인천10·부산16 전체 82개 행정구. 평균 도착 32분, 동(洞) 단위 데이터."
     return page(title, desc, "/locations/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("지역","/locations/")])], active="locations")
@@ -63,7 +89,18 @@ def city_hub(city_slug):
     "임신·심혈관·급성 염증·수술 직후 2주 이내 등 금기 신호 7가지는 시술 전 확인됩니다.",
     "응급 상황 발생 시 본사 응급팀이 24시간 대응합니다.",
 ])}
-</section>{cta_band(title=f'{c["name_ko"]} 24시 예약', desc=f'평균 {avg:.0f}분 도착 — 전화 한 통으로 가까운 매니저가 출발합니다.')}"""
+</section>
+{ilink_section(
+    "QUICK LINKS",
+    f"{c['name_ko']} 행정구 · 코스별 출장마사지",
+    f"{c['name_ko']} {c['count']}개 행정구와 코스별 페이지로 바로 이동하실 수 있습니다.",
+    [
+        (f"{c['name_ko']} 행정구별 출장마사지", _district_links(city_slug, n=20)),
+        ("코스별 출장마사지", _service_links()),
+        ("다른 광역 출장마사지", _city_links(exclude=city_slug)),
+    ],
+)}
+{cta_band(title=f'{c["name_ko"]} 24시 예약', desc=f'평균 {avg:.0f}분 도착 — 전화 한 통으로 가까운 매니저가 출발합니다.')}"""
     title = f"{c['name_ko']} 출장마사지 — 마사지꾼 {c['count']}개구"
     desc = f"{c['name_ko']} {c['count']}개 행정구 출장마사지. 평균 도착 {avg:.0f}분, 24시 운영."
     return page(title, desc, f"/locations/{city_slug}/", body, ld_objs=[
@@ -325,7 +362,18 @@ def district_page(d):
 <h2 style="margin-top:64px">{d['name_ko']} 실 후기</h2>
 <div class="rv-grid">{reviews_html}</div>
 
-</section>{cta_band(title=f'{d["name_ko"]} 24시 예약', desc=f'평균 {avg}분 도착 — 가까운 매니저가 즉시 출발합니다.')}"""
+</section>
+{ilink_section(
+    "NEARBY & COURSES",
+    f"{d['name_ko']} 주변 권역 · 코스별 출장마사지",
+    f"{city['name_ko']} 인접 권역과 코스별 페이지를 함께 둘러보세요. 동선·코스에 맞는 권역을 비교해 예약하실 수 있습니다.",
+    [
+        (f"{city['name_ko']} 인접 권역 출장마사지", _district_links(city_slug, exclude=d['slug'], n=12)),
+        (f"{d['name_ko']} 코스별 출장마사지", _service_links()),
+        ("다른 광역 출장마사지", _city_links(exclude=city_slug)),
+    ],
+)}
+{cta_band(title=f'{d["name_ko"]} 24시 예약', desc=f'평균 {avg}분 도착 — 가까운 매니저가 즉시 출발합니다.')}"""
 
     faqs = [
         (f"{d['name_ko']} 어디까지 출장이 가능한가요?", f"{d['name_ko']} 전체 동(洞) — {', '.join(name for name, _ in d['dongs'][:3])} 등 — 모두 가능합니다."),

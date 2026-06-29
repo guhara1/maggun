@@ -4,7 +4,8 @@ from data.site import SITE
 from data.catalog import SERVICES
 from template import (
     page, note_card, faq_block, faq_ld, breadcrumb_html, cta_band,
-    section_head, organization_ld, breadcrumb_ld
+    section_head, organization_ld, breadcrumb_ld,
+    aggregate_rating_ld, review_objs,
 )
 
 
@@ -52,7 +53,18 @@ def service_hub():
             ("처음 받는데 무엇이 좋을까요?","90분 스웨디시를 가장 자주 권장합니다.")]
     title = f"서비스 전체 — 마사지꾼 5가지 코스"
     desc = f"스웨디시·아로마·타이·로미로미·스포츠 5가지 코스 안내. 코스 선택·가격·안전 가이드."
-    return page(title, desc, "/service/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("서비스","/service/")]), faq_ld(faqs)], active="service")
+    hub_ld = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": f"{SITE['brand_full']} 코스",
+        "provider": {"@id": f"{SITE['base_url']}/#org"},
+        "areaServed": "KR",
+        "description": "스웨디시·아로마·타이·로미로미·스포츠 5가지 출장마사지 코스.",
+        "aggregateRating": {"@type": "AggregateRating", "ratingValue": SITE["stats"]["rating"],
+                            "reviewCount": SITE["stats"]["review_count"], "bestRating": 5, "worstRating": 1},
+        "review": review_objs("service-hub", 4),
+    }
+    return page(title, desc, "/service/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("서비스","/service/")]), faq_ld(faqs), hub_ld], active="service")
 
 
 def service_detail(s):
@@ -126,6 +138,8 @@ def service_detail(s):
             "price": p,
             "availability": "https://schema.org/InStock",
         } for m, p in s["duration_options"]],
+        "aggregateRating": aggregate_rating_ld(f"service-{s['slug']}"),
+        "review": review_objs(f"service-{s['slug']}", 4),
     }
     return page(title, desc, f"/service/{s['slug']}/", body, ld_objs=[
         organization_ld(),

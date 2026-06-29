@@ -1,13 +1,13 @@
 /* TEAM */
 대표: 김유환
 회사: YH LAB
-이메일: help@massageggun.netlify.app
+이메일: help@maggun.netlify.app
 주소: 경기도 파주시 청석로 268
 
 운영팀: 김세영(서울권), 박정훈(경기·인천권), 이수민(부산권)
 자문: 박지연(KSPO 스포츠 트레이너), 정민호(물리치료사 PT), 윤하늬(IFA 아로마테라피스트)
 
 /* SITE */
-최종 갱신: 2026-05-28
+최종 갱신: 2026-06-29
 언어: 한국어 (ko-KR)
 표준: HTML5, JSON-LD, RSS 2.0, Atom 1.0, IndexNow, Sitemap 0.9
