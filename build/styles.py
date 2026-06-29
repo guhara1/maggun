@@ -207,8 +207,18 @@ details>div{padding:0 22px 22px;color:#c8c8d0;font-size:14.5px;line-height:1.78;
 .signoff{margin-top:36px;padding:18px 22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;font-size:13px;color:var(--muted)}
 .signoff b{color:#d8d8e0}
 
-#region,#process,#reviews,#about,#faq,.cta-band,.site-footer,#methodology,#pricing{content-visibility:auto;contain-intrinsic-size:auto 700px}
-.svc,.reg,.step,.review,.note-card,.price-card{contain:layout style}
+/* INTERNAL LINKS (롱테일 내부링크) */
+.ilinks{padding-top:0}
+.ilink-wrap{display:grid;gap:24px}
+.ilink-group{padding:24px 26px;background:var(--surface);border:1px solid var(--line);border-radius:18px}
+.ilink-head{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:16px}
+.ilink-row{display:flex;flex-wrap:wrap;gap:10px}
+.ilink{display:inline-flex;align-items:center;padding:9px 16px;font-size:13.5px;color:#d0d0d8;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;transition:.2s;letter-spacing:-.01em}
+.ilink:hover{color:#0b0b0e;background:var(--grad);border-color:transparent;transform:translateY(-2px)}
+@media(min-width:760px){.ilink-wrap{grid-template-columns:1fr 1fr}}
+
+#region,#process,#reviews,#about,#faq,.cta-band,.site-footer,#methodology,#pricing,.ilinks{content-visibility:auto;contain-intrinsic-size:auto 700px}
+.svc,.reg,.step,.review,.note-card,.price-card,.ilink-group{contain:layout style}
 @media(hover:none){.glass,.floating{backdrop-filter:none!important}}
 @media(prefers-reduced-motion:reduce){.marquee-track,.pulse{animation:none!important}.reveal{opacity:1!important;transform:none!important}}
 """

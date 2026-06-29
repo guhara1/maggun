@@ -54,7 +54,7 @@ def write(rel_path, html):
 
 def write_robots():
     robots = f"""# robots.txt for {SITE['brand_full']} ({SITE['base_url']})
-# Updated: 2026-05-28
+# Updated: {TODAY}
 
 # ── Mainstream search bots ──────────────────────────────────
 User-agent: Googlebot
@@ -166,7 +166,7 @@ def write_favicon_svg():
     (OUT / "favicon.svg").write_text(svg, encoding="utf-8")
 
 
-TODAY = "2026-05-28"
+TODAY = "2026-06-29"
 
 
 def write_sitemap(urls):

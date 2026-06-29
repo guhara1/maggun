@@ -4,7 +4,8 @@ from data.site import SITE
 from data.catalog import THERAPISTS
 from template import (
     page, note_card, faq_block, faq_ld, breadcrumb_html, cta_band,
-    section_head, organization_ld, breadcrumb_ld
+    section_head, organization_ld, breadcrumb_ld,
+    aggregate_rating_ld, review_objs,
 )
 
 
@@ -48,7 +49,18 @@ def therapist_hub():
             ("외국인 매니저는 한국어가 가능한가요?","대부분 기본 한국어가 가능하며, 본사 통역도 24시간 대기합니다.")]
     title = f"관리사 소개 — 마사지꾼 6개국 156명"
     desc = f"한국·중국·태국·베트남·러시아·일본 매니저 156명. 본사 80시간 교육·실시간 평가."
-    return page(title, desc, "/therapists/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("관리사","/therapists/")]), faq_ld(faqs)], active="therapists")
+    hub_ld = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": f"{SITE['brand_full']} 관리사",
+        "provider": {"@id": f"{SITE['base_url']}/#org"},
+        "areaServed": "KR",
+        "description": "한국·중국·태국·베트남·러시아·일본 6개국 출장마사지 관리사 156명.",
+        "aggregateRating": {"@type": "AggregateRating", "ratingValue": SITE["stats"]["rating"],
+                            "reviewCount": SITE["stats"]["review_count"], "bestRating": 5, "worstRating": 1},
+        "review": review_objs("therapist-hub", 4),
+    }
+    return page(title, desc, "/therapists/", body, ld_objs=[organization_ld(), breadcrumb_ld([("홈","/"),("관리사","/therapists/")]), faq_ld(faqs), hub_ld], active="therapists")
 
 
 def therapist_detail(t):
@@ -84,10 +96,22 @@ def therapist_detail(t):
             (f"{t['name_ko']} 매니저를 지정할 수 있나요?","가능합니다. 권역에 따라 가용성이 달라 콜 시점에 안내드립니다.")]
     title = f"{t['name_ko']} 출장마사지 — 마사지꾼 ({t['count']}명)"
     desc = f"{t['name_ko']} 손기술: {t['strength']}. {t['exp_avg']}·활동 {t['count']}명. 24시 출장."
+    therapist_ld = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": f"{t['name_ko']} 출장마사지",
+        "serviceType": f"{t['name_ko']} 마사지 관리사",
+        "provider": {"@id": f"{SITE['base_url']}/#org"},
+        "areaServed": "KR",
+        "description": f"{t['desc']}. 강점: {t['strength']}. {t['exp_avg']}·활동 {t['count']}명.",
+        "aggregateRating": aggregate_rating_ld(f"therapist-{t['slug']}"),
+        "review": review_objs(f"therapist-{t['slug']}", 4),
+    }
     return page(title, desc, f"/therapists/{t['slug']}/", body, ld_objs=[
         organization_ld(),
         breadcrumb_ld([("홈","/"),("관리사","/therapists/"),(t['name_ko'],f"/therapists/{t['slug']}/")]),
         faq_ld(faqs),
+        therapist_ld,
     ], active="therapists")
 
 

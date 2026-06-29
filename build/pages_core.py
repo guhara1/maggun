@@ -5,8 +5,24 @@ from data.catalog import SERVICES, GLOBAL_REVIEWS, THERAPISTS
 from data.districts import CITIES
 from template import (
     page, note_card, faq_block, faq_ld, breadcrumb_html, cta_band,
-    section_head, organization_ld, website_ld, breadcrumb_ld
+    section_head, organization_ld, website_ld, breadcrumb_ld,
+    ilink_section, aggregate_rating_ld, review_objs,
 )
+
+
+def _longtail_groups():
+    """메인·요금 등에서 재사용하는 롱테일 내부링크 묶음."""
+    def dlinks(city_slug, n):
+        c = CITIES[city_slug]
+        return [(f"/locations/{city_slug}/{d['slug']}/", f"{d['name_ko']} 출장마사지")
+                for d in c["districts"][:n]]
+    svc_links = [(f"/service/{s['slug']}/", f"{s['name_ko']} 출장마사지") for s in SERVICES]
+    return [
+        ("서울 자치구별 24시 출장마사지", dlinks("seoul", 13)),
+        ("경기·인천 권역별 출장마사지", dlinks("gyeonggi", 9) + dlinks("incheon", 5)),
+        ("부산 구·군별 출장마사지", dlinks("busan", 10)),
+        ("코스별 인기 출장마사지", svc_links),
+    ]
 
 
 # ---------- 메인 페이지 ----------
@@ -67,7 +83,12 @@ def index_page():
 </a>""" for slug, c in CITIES.items()) + """
 </div>
 </section>
-
+""" + ilink_section(
+    "POPULAR SEARCHES",
+    "지역·코스별 인기 출장마사지 바로가기",
+    "가장 많이 찾으시는 행정구와 코스를 한 번에 모았습니다. 원하는 권역을 누르면 동(洞) 단위 도착 데이터와 후기를 바로 확인하실 수 있습니다.",
+    _longtail_groups(),
+) + """
 <section class="wrap" id="process">""" + section_head("HOW IT WORKS", "전화 한 통, 네 단계.") + """
 <div class="steps">
 <div class="step reveal"><span class="n">01</span><h3>전화 또는 카카오 문의</h3><p>위치·인원·희망 코스·시간만 알려주시면 됩니다. 평균 응답 30초.</p></div>
@@ -162,7 +183,14 @@ def index_page():
             "addressCountry": "KR",
         },
         "openingHoursSpecification": SITE["open_hours_spec"],
-        "aggregateRating": {"@type": "AggregateRating", "ratingValue": SITE["stats"]["rating"], "reviewCount": SITE["stats"]["review_count"]},
+        "aggregateRating": {"@type": "AggregateRating", "ratingValue": SITE["stats"]["rating"], "reviewCount": SITE["stats"]["review_count"], "bestRating": 5, "worstRating": 1},
+        "review": [{
+            "@type": "Review",
+            "author": {"@type": "Person", "name": r["name"]},
+            "datePublished": r["date"],
+            "reviewBody": r["body"],
+            "reviewRating": {"@type": "Rating", "ratingValue": r["rating"], "bestRating": 5, "worstRating": 1},
+        } for r in GLOBAL_REVIEWS[:6]],
         "areaServed": [{"@type": "AdministrativeArea", "name": c["name_ko"]} for c in CITIES.values()],
         "hasOfferCatalog": {
             "@type": "OfferCatalog", "name": "출장마사지 코스",
@@ -246,9 +274,23 @@ def about_page():
     title = f"브랜드 소개 — 마사지꾼"
     desc = f"마사지꾼 운영 철학·운영진 3명·자문 트레이너 3명·5개월 23,700건 배차 로그 기반 신뢰."
 
+    about_local_ld = {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": f"{SITE['base_url']}/#localbusiness",
+        "name": SITE["brand_full"],
+        "url": f"{SITE['base_url']}/about/",
+        "image": f"{SITE['base_url']}/assets/og-cover.jpg",
+        "telephone": SITE["phone_tel"],
+        "priceRange": "₩₩",
+        "aggregateRating": {"@type": "AggregateRating", "ratingValue": SITE["stats"]["rating"],
+                            "reviewCount": SITE["stats"]["review_count"], "bestRating": 5, "worstRating": 1},
+        "review": review_objs("about", 4),
+    }
     return page(title, desc, "/about/", body, ld_objs=[
         organization_ld(),
         breadcrumb_ld([("홈","/"),("브랜드 소개","/about/")]),
+        about_local_ld,
     ])
 
 
@@ -301,10 +343,34 @@ def pricing_page():
             ("환불은 언제 가능한가요?","시술 시작 전까지 100% 환불 가능합니다.")]
     title = f"요금표 — 마사지꾼 출장마사지 가격"
     desc = f"스웨디시·아로마·타이·로미로미·스포츠 전 코스 가격. 심야 할증·사전 결제 없음."
+
+    # 전 코스 가격을 Product 스키마로 — 평점·후기·점수 노출
+    price_ld = []
+    for s in SERVICES:
+        m0, p0 = s["duration_options"][0]
+        price_ld.append({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": f"{s['name_ko']} 출장마사지",
+            "description": s["summary"],
+            "brand": {"@type": "Brand", "name": SITE["brand_full"]},
+            "offers": {
+                "@type": "AggregateOffer",
+                "priceCurrency": "KRW",
+                "lowPrice": s["duration_options"][0][1],
+                "highPrice": s["duration_options"][-1][1],
+                "offerCount": len(s["duration_options"]),
+                "availability": "https://schema.org/InStock",
+                "seller": {"@id": f"{SITE['base_url']}/#org"},
+            },
+            "aggregateRating": aggregate_rating_ld(f"service-{s['slug']}"),
+            "review": review_objs(f"service-{s['slug']}", 3),
+        })
     return page(title, desc, "/pricing/", body, ld_objs=[
         organization_ld(),
         breadcrumb_ld([("홈","/"),("요금","/pricing/")]),
         faq_ld(faqs),
+        *price_ld,
     ])
 
 

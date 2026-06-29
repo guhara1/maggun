@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """기본 HTML 셸 — head/header/footer/공통 JSON-LD."""
 import json
+import hashlib
 from data.site import SITE
 from styles import CSS
 
@@ -9,6 +10,43 @@ BASE_URL = SITE["base_url"]
 
 def jsonld(obj):
     return f'<script type="application/ld+json">{json.dumps(obj, ensure_ascii=False, separators=(",", ":"))}</script>'
+
+
+# ---------- 평점·후기 스키마 헬퍼 (전 페이지 공통) ----------
+
+def _seed(key):
+    """PYTHONHASHSEED 비의존 결정적 정수 — 빌드 재현성 보장."""
+    return int(hashlib.md5(str(key).encode("utf-8")).hexdigest(), 16)
+
+
+def rating_for(key, base=4.88, span=0.10, lo_count=180, hi_count=520):
+    """slug 등 키에서 결정적 평점·리뷰수 생성 (4.88~4.98)."""
+    h = _seed(key)
+    value = round(base + (h % 1000) / 1000 * span, 2)
+    count = lo_count + (h // 1000) % (hi_count - lo_count)
+    return value, count
+
+
+def aggregate_rating_ld(key, base=4.88, span=0.10):
+    value, count = rating_for(key, base=base, span=span)
+    return {"@type": "AggregateRating", "ratingValue": value, "reviewCount": count,
+            "bestRating": 5, "worstRating": 1}
+
+
+def review_objs(key, n=4):
+    """GLOBAL_REVIEWS 풀에서 결정적으로 n개를 골라 Review 스키마 리스트 생성."""
+    from data.catalog import GLOBAL_REVIEWS
+    pool = list(GLOBAL_REVIEWS)
+    h = _seed(key)
+    start = h % len(pool)
+    picked = [pool[(start + i * 3) % len(pool)] for i in range(n)]
+    return [{
+        "@type": "Review",
+        "author": {"@type": "Person", "name": r["name"]},
+        "datePublished": r["date"],
+        "reviewBody": r["body"],
+        "reviewRating": {"@type": "Rating", "ratingValue": r["rating"], "bestRating": 5, "worstRating": 1},
+    } for r in picked]
 
 
 def organization_ld():
@@ -81,7 +119,7 @@ def head(title, desc, canonical, og_image=None, extra=""):
     if canonical == "/":
         verify = (
             '<meta name="google-site-verification" content="MU_vE-O28ixg9Dcxc3NG_yDEMbtaCnBohs289fRl8P8">\n'
-            '<meta name="naver-site-verification" content="88c8e632406a50ca56f95538c18ebc5b033cd95a">\n'
+            '<meta name="naver-site-verification" content="9044825c7fedff5ffb478860feaeebecb298b020">\n'
         )
     return f"""<!doctype html><html lang="ko-KR"><head>
 <meta charset="utf-8">
@@ -296,3 +334,15 @@ def cta_band(title="오늘 밤, 가장 편한 회복을 약속드립니다.", de
 def section_head(eyebrow, title, lead=""):
     p = f"<p>{lead}</p>" if lead else ""
     return f'<div class="section-head reveal"><span class="eyebrow"><span class="pulse"></span>{eyebrow}</span><h2>{title}</h2>{p}</div>'
+
+
+def ilink_group(heading, links):
+    """롱테일 내부링크 한 묶음 — (href, anchor) 리스트를 칩 형태로 렌더."""
+    chips = "".join(f'<a class="ilink" href="{href}">{anchor}</a>' for href, anchor in links)
+    return f'<div class="ilink-group reveal"><h3 class="ilink-head">{heading}</h3><div class="ilink-row">{chips}</div></div>'
+
+
+def ilink_section(eyebrow, title, lead, groups):
+    """롱테일 내부링크 섹션 — 여러 ilink_group 묶음."""
+    body = "".join(ilink_group(h, links) for h, links in groups)
+    return f'<section class="wrap ilinks">{section_head(eyebrow, title, lead)}<div class="ilink-wrap">{body}</div></section>'
